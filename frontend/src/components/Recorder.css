@@ -1,0 +1,11 @@
+.record-button.stopped {
+  background: #6c757d !important;
+  color: white !important;
+  cursor: not-allowed !important;
+  opacity: 0.7;
+}
+
+.record-button.stopped:hover {
+  transform: none !important;
+  box-shadow: none !important;
+} 

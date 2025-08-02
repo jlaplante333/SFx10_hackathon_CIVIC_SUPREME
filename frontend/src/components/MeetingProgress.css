@@ -1,0 +1,435 @@
+.meeting-progress-container {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.meeting-progress-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 3px solid #f1f2f6;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.test-switch-btn {
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+}
+
+.test-switch-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+}
+
+.meeting-progress-header h3 {
+  color: #2f3542;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.meeting-time {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.time-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.time-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+.debug-info {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-left: 0.5rem;
+}
+
+/* Mini Goals List */
+.goals-mini-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.goal-mini-item {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1rem;
+  border-left: 4px solid #e9ecef;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.goal-mini-item.completed {
+  border-left-color: #28a745;
+  background: linear-gradient(135deg, #f8fff9 0%, #e8f5e8 100%);
+}
+
+.goal-mini-item.current {
+  border-left-color: #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  transform: translateX(4px) scale(1.02);
+}
+
+.goal-mini-item.current .goal-mini-title {
+  color: white;
+  font-weight: 700;
+}
+
+.goal-mini-item.current .goal-mini-time,
+.goal-mini-item.current .goal-mini-buffer,
+.goal-mini-item.current .goal-mini-scheduled {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.goal-mini-item.current .goal-mini-status {
+  color: white;
+}
+
+.goal-mini-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.goal-mini-number {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-shadow: 0 3px 8px rgba(102, 126, 234, 0.3);
+}
+
+.goal-mini-item.current .goal-mini-number {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.goal-mini-title {
+  flex: 1;
+  font-size: 1rem;
+  color: #2f3542;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.goal-mini-title.completed {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+.goal-mini-metrics {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.goal-mini-complexity {
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.goal-mini-time {
+  background: #e9ecef;
+  color: #495057;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.goal-mini-buffer {
+  background: #fff3cd;
+  color: #856404;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.goal-mini-scheduled {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  border: 1px solid #bbdefb;
+}
+
+.goal-mini-status {
+  background: none;
+  border: none;
+  color: #6c757d;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+  width: auto;
+  height: auto;
+}
+
+.goal-mini-status:hover {
+  color: #667eea;
+  transform: scale(1.1);
+}
+
+.goal-mini-status.completed {
+  color: #28a745;
+}
+
+/* Buffer Bank Display */
+.buffer-bank-display {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+  color: #856404;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  border: 1px solid #ffeaa7;
+}
+
+.buffer-label {
+  font-size: 0.9rem;
+}
+
+.buffer-value {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .meeting-progress-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .meeting-time {
+    align-self: stretch;
+    justify-content: center;
+  }
+  
+  .goal-mini-content {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  
+  .goal-mini-metrics {
+    order: 3;
+    width: 100%;
+  }
+} 
+
+/* Time Extension Popup */
+.time-extension-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  backdrop-filter: blur(10px);
+}
+
+.time-extension-popup {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.5);
+  animation: popupSlideIn 0.4s ease-out;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000000;
+}
+
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.popup-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.popup-header h3 {
+  color: #2f3542;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.popup-content {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.popup-content p {
+  margin: 0.75rem 0;
+  color: #495057;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.popup-question {
+  font-size: 1.3rem !important;
+  font-weight: 500 !important;
+  color: #2f3542 !important;
+  margin-bottom: 1.5rem !important;
+  opacity: 0.9;
+}
+
+.current-goal-info {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  font-weight: 600;
+}
+
+.time-info {
+  background: #fff3cd;
+  color: #856404;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.popup-btn {
+  padding: 0.875rem 1.75rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  min-width: 130px;
+  opacity: 0.95;
+}
+
+.popup-btn:hover {
+  opacity: 1;
+  transform: translateY(-3px);
+}
+
+.extend-btn {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.extend-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+.decide-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.25);
+}
+
+.decide-btn:hover {
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+}
+
+.more-time-btn {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.25);
+}
+
+.more-time-btn:hover {
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.35);
+}
+
+.continue-btn {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+}
+
+.continue-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+} 

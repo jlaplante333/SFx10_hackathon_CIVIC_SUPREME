@@ -35,11 +35,10 @@ const Recorder = ({ isRecording, onRecordingStart, onRecordingStop, onTranscript
           setLiveTranscript(prev => {
             const newTranscript = prev + ' ' + finalTranscript;
             console.log('Updated live transcript:', newTranscript);
+            // Send to parent component with the updated transcript
+            onTranscriptUpdate(newTranscript);
             return newTranscript;
           });
-          
-          // Send to parent component
-          onTranscriptUpdate(liveTranscript + ' ' + finalTranscript);
         }
         
         if (interimTranscript) {

@@ -33,10 +33,11 @@ def vapi_webhook():
             return jsonify({'error': 'Missing transcript in request'}), 400
         
         transcript = data['transcript']
+        request_type = data.get('request_type', 'engineering_discussion_analysis')
         logger.info(f"Received transcript: {transcript[:100]}...")
         
-        # Send to Mastra agent
-        mastra_response = mastra_handler.process_transcript(transcript)
+        # Send to Mastra agent with specific request type
+        mastra_response = mastra_handler.process_transcript(transcript, request_type)
         
         if not mastra_response:
             return jsonify({'error': 'Failed to process transcript with Mastra'}), 500
@@ -45,6 +46,7 @@ def vapi_webhook():
         summary = mastra_response.get('summary', '')
         diagram = mastra_response.get('diagram', '')
         tasks = mastra_response.get('tasks', [])
+        suggestions = mastra_response.get('suggestions', [])
         
         # Push tasks to external tools if Composio is configured
         if os.getenv('COMPOSIO_API_KEY'):
@@ -57,7 +59,8 @@ def vapi_webhook():
         response_data = {
             'summary': summary,
             'diagram': diagram,
-            'tasks': tasks
+            'tasks': tasks,
+            'suggestions': suggestions
         }
         
         logger.info(f"Successfully processed transcript. Summary: {summary[:50]}...")
@@ -65,6 +68,92 @@ def vapi_webhook():
         
     except Exception as e:
         logger.error(f"Error processing webhook: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/smart-assistant', methods=['POST'])
+def smart_assistant():
+    """
+    Smart assistant endpoint for real-time meeting insights
+    """
+    try:
+        data = request.get_json()
+        
+        if not data or 'transcript' not in data:
+            return jsonify({'error': 'Missing transcript in request'}), 400
+        
+        transcript = data['transcript']
+        current_goal = data.get('current_goal', '')
+        meeting_context = data.get('meeting_context', {})
+        
+        logger.info(f"Smart assistant request for goal: {current_goal}")
+        
+        # Process with Mastra for smart assistant insights
+        mastra_response = mastra_handler.process_smart_assistant(
+            transcript, 
+            current_goal, 
+            meeting_context
+        )
+        
+        if not mastra_response:
+            return jsonify({'error': 'Failed to process smart assistant request'}), 500
+        
+        response_data = {
+            'suggestions': mastra_response.get('suggestions', []),
+            'insights': mastra_response.get('insights', []),
+            'recommendations': mastra_response.get('recommendations', []),
+            'time_optimization': mastra_response.get('time_optimization', {}),
+            'agenda_drift_detection': mastra_response.get('agenda_drift_detection', False)
+        }
+        
+        logger.info(f"Smart assistant processed successfully. Generated {len(response_data['suggestions'])} suggestions")
+        return jsonify(response_data), 200
+        
+    except Exception as e:
+        logger.error(f"Error processing smart assistant request: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/meeting-analysis', methods=['POST'])
+def meeting_analysis():
+    """
+    Comprehensive meeting analysis endpoint
+    """
+    try:
+        data = request.get_json()
+        
+        if not data or 'transcript' not in data:
+            return jsonify({'error': 'Missing transcript in request'}), 400
+        
+        transcript = data['transcript']
+        goals = data.get('goals', [])
+        decisions = data.get('decisions', {})
+        
+        logger.info(f"Meeting analysis request for {len(goals)} goals")
+        
+        # Process with Mastra for comprehensive analysis
+        mastra_response = mastra_handler.process_meeting_analysis(
+            transcript, 
+            goals, 
+            decisions
+        )
+        
+        if not mastra_response:
+            return jsonify({'error': 'Failed to process meeting analysis'}), 500
+        
+        response_data = {
+            'executive_summary': mastra_response.get('executive_summary', ''),
+            'action_items': mastra_response.get('action_items', []),
+            'technical_specs': mastra_response.get('technical_specs', {}),
+            'follow_up_meetings': mastra_response.get('follow_up_meetings', []),
+            'efficiency_score': mastra_response.get('efficiency_score', 0),
+            'key_decisions': mastra_response.get('key_decisions', []),
+            'risk_analysis': mastra_response.get('risk_analysis', {})
+        }
+        
+        logger.info(f"Meeting analysis completed. Efficiency score: {response_data['efficiency_score']}")
+        return jsonify(response_data), 200
+        
+    except Exception as e:
+        logger.error(f"Error processing meeting analysis: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 @app.route('/health', methods=['GET'])

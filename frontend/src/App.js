@@ -6,6 +6,9 @@ import FeaturePanel from './components/FeaturePanel';
 import DiagramViewer from './components/DiagramViewer';
 import GoalsSetup from './components/GoalsSetup';
 import MeetingProgress from './components/MeetingProgress';
+import CompletionPage from './components/CompletionPage';
+import SmartAssistant from './components/SmartAssistant';
+import FAQ from './components/FAQ';
 import './components/GoalsSetup.css';
 import './components/MeetingProgress.css';
 
@@ -17,11 +20,13 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [currentPage, setCurrentPage] = useState('goals'); // 'goals' or 'meeting'
+  const [currentPage, setCurrentPage] = useState('goals'); // 'goals', 'meeting', or 'completion'
   const [meetingGoals, setMeetingGoals] = useState([]);
   const [currentGoalIndex, setCurrentGoalIndex] = useState(0);
   const [meetingStartTime, setMeetingStartTime] = useState(null);
   const [bufferBank, setBufferBank] = useState(0);
+  const [decisions, setDecisions] = useState({});
+  const [hasStopped, setHasStopped] = useState(false);
 
   // Environment variable for backend URL
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
@@ -81,19 +86,16 @@ function App() {
 
   const handleRecordingStart = () => {
     setIsRecording(true);
-    setTranscript('');
-    setSummary('');
-    setDiagram('');
-    setTasks([]);
-    setError('');
+    setHasStopped(false);
+    if (!meetingStartTime) {
+      setMeetingStartTime(Date.now());
+    }
   };
 
   const handleRecordingStop = () => {
     setIsRecording(false);
-    // Fetch analysis immediately when recording stops
-    if (transcript.trim()) {
-      fetchAnalysis();
-    }
+    setHasStopped(true);
+    setCurrentPage('completion');
   };
 
   const handleTranscriptUpdate = (newTranscript) => {
@@ -107,6 +109,13 @@ function App() {
     setCurrentGoalIndex(0);
     setMeetingStartTime(Date.now());
     setCurrentPage('meeting'); // Automatically navigate to meeting page
+    
+    // Scroll to top of the page when navigating to meeting page
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   };
 
   // Auto-start recording when navigating to meeting page
@@ -116,6 +125,17 @@ function App() {
       handleRecordingStart();
     }
   }, [currentPage, isRecording]);
+
+  // Scroll to top when meeting page loads
+  useEffect(() => {
+    if (currentPage === 'meeting') {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
+  }, [currentPage]);
 
   const handleNavigateToMeeting = () => {
     setCurrentPage('voice');
@@ -149,7 +169,7 @@ function App() {
   };
 
   // Handle agenda item completion and trigger OpenAI analysis
-  const handleAgendaItemComplete = (completedGoalIndex) => {
+  const handleAgendaItemComplete = async (completedGoalIndex) => {
     console.log(`Agenda item ${completedGoalIndex} completed, triggering OpenAI analysis`);
     
     // Mark the goal as complete
@@ -162,8 +182,70 @@ function App() {
       );
     }
     
-    // The FeaturePanel will automatically analyze the transcript when the goal changes
-    // because it's listening to currentGoalIndex changes
+    // Get the current transcript for this agenda item
+    const currentTranscript = transcript;
+    
+    // Clear the transcript immediately so it starts fresh for the next agenda item
+    console.log('Clearing transcript for next agenda item');
+    setTranscript('');
+    
+    // Send transcript to OpenAI for analysis
+    if (currentTranscript && currentTranscript.trim()) {
+      console.log('Sending transcript to OpenAI for analysis:', currentTranscript);
+      console.log('Transcript length:', currentTranscript.length);
+      console.log('OpenAI API Key available:', !!process.env.REACT_APP_OPENAI_API_KEY);
+      
+      const openaiApiKey = process.env.REACT_APP_OPENAI_API_KEY;
+      if (!openaiApiKey) {
+        console.error('OpenAI API key not found in environment variables');
+        return;
+      }
+      
+      try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${openaiApiKey}`
+          },
+          body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: [
+              {
+                role: 'system',
+                content: 'You are an AI assistant that analyzes meeting transcripts and extracts key decisions and takeaways. Provide concise, actionable insights.'
+              },
+              {
+                role: 'user',
+                content: `Analyze this meeting transcript for the agenda item "${completedGoal.title}". Extract the key decisions made, important takeaways, and any action items. Be concise and specific.\n\nTranscript:\n${currentTranscript}`
+              }
+            ],
+            max_tokens: 300,
+            temperature: 0.7
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const analysis = data.choices[0].message.content;
+          console.log('OpenAI analysis result:', analysis);
+          
+          // Update the decision for this goal
+          setDecisions(prev => ({
+            ...prev,
+            [`goal_${completedGoalIndex}`]: analysis
+          }));
+        } else {
+          console.error('OpenAI API error:', response.status, response.statusText);
+          const errorText = await response.text();
+          console.error('Error response:', errorText);
+        }
+      } catch (error) {
+        console.error('Error calling OpenAI:', error);
+      }
+    } else {
+      console.log('No transcript available to send to OpenAI');
+    }
   };
 
   return (
@@ -173,6 +255,13 @@ function App() {
         <div className="goals-setup-page">
           <GoalsSetup onGoalsSubmit={handleGoalsSubmit} />
         </div>
+      ) : currentPage === 'completion' ? (
+        // Completion Page
+        <CompletionPage 
+          goals={meetingGoals}
+          decisions={decisions}
+          totalTime={meetingGoals.reduce((sum, goal) => sum + goal.estimatedTime, 0) + bufferBank}
+        />
       ) : (
         // Meeting Page
         <>
@@ -202,6 +291,7 @@ function App() {
                 onRecordingStart={handleRecordingStart}
                 onRecordingStop={handleRecordingStop}
                 onTranscriptUpdate={handleTranscriptUpdate}
+                hasStopped={hasStopped}
               />
               
               <TranscriptDisplay 
@@ -216,6 +306,16 @@ function App() {
                 goals={meetingGoals} 
                 currentGoalIndex={currentGoalIndex}
                 transcript={transcript}
+                decisions={decisions}
+                setDecisions={setDecisions}
+              />
+              
+              {/* Smart Assistant underneath FeaturePanel */}
+              <SmartAssistant 
+                transcript={transcript}
+                currentGoalIndex={currentGoalIndex}
+                goals={meetingGoals}
+                isRecording={isRecording}
               />
               
               <div className="analysis-section">
@@ -232,6 +332,9 @@ function App() {
               </div>
             </div>
           </main>
+
+          {/* Beautiful FAQ Section */}
+          <FAQ />
         </>
       )}
     </div>

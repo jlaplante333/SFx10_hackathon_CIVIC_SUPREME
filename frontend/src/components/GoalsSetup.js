@@ -7,7 +7,7 @@ const GoalsSetup = ({ onGoalsSubmit }) => {
       id: 1,
       title: "Problem Identification",
       complexity: 5,
-      estimatedTime: 0.75, // 45 seconds = 0.75 minutes
+      estimatedTime: 0.5, // 30 seconds = 0.5 minutes
       completed: false,
       goal: "Define the core meeting efficiency problem we're solving"
     },
@@ -15,7 +15,7 @@ const GoalsSetup = ({ onGoalsSubmit }) => {
       id: 2,
       title: "Solution Architecture", 
       complexity: 8,
-      estimatedTime: 1, // 60 seconds = 1 minute
+      estimatedTime: 0.5, // 30 seconds = 0.5 minutes
       completed: false,
       goal: "Explain how Huddle uses AI to maximize meeting efficiency and build consensus in real time"
     },
@@ -23,7 +23,7 @@ const GoalsSetup = ({ onGoalsSubmit }) => {
       id: 3,
       title: "Feature Demonstration",
       complexity: 6,
-      estimatedTime: 0.75, // 45 seconds = 0.75 minutes
+      estimatedTime: 0.5, // 30 seconds = 0.5 minutes
       completed: false,
       goal: "Show key capabilities"
     },
@@ -90,7 +90,7 @@ const GoalsSetup = ({ onGoalsSubmit }) => {
   };
 
   const updateGoalTime = (id, field, value) => {
-    const numValue = parseInt(value) || 0;
+    const numValue = field === 'estimatedTime' ? parseFloat(value) || 0 : parseInt(value) || 0;
     console.log(`Updating goal ${id}, field ${field} to ${numValue}`);
     
     setIsUpdating(true);
@@ -126,8 +126,7 @@ const GoalsSetup = ({ onGoalsSubmit }) => {
   return (
     <div className="goals-setup-container">
       <div className="goals-setup-header">
-        <div className="header-icon">🎯</div>
-        <h1>Meeting Goals Setup</h1>
+        <h1>Huddle</h1>
         <p>Define your meeting agenda with goals, complexity, and time estimates</p>
       </div>
       
@@ -205,9 +204,10 @@ const GoalsSetup = ({ onGoalsSubmit }) => {
               <label>Estimated Time (min):</label>
               <input
                 type="number"
-                min="1"
+                min="0.1"
+                step="0.1"
                 value={newGoal.estimatedTime}
-                onChange={(e) => setNewGoal({...newGoal, estimatedTime: parseInt(e.target.value)})}
+                onChange={(e) => setNewGoal({...newGoal, estimatedTime: parseFloat(e.target.value) || 0})}
                 className="goal-input-small"
               />
             </div>
@@ -256,7 +256,8 @@ const GoalsSetup = ({ onGoalsSubmit }) => {
                     <label>Est. Time:</label>
                     <input
                       type="number"
-                      min="1"
+                      min="0.1"
+                      step="0.1"
                       value={goal.estimatedTime}
                       onChange={(e) => updateGoalTime(goal.id, 'estimatedTime', e.target.value)}
                       className="time-input"

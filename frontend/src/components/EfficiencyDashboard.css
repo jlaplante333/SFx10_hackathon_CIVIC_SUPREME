@@ -1,0 +1,103 @@
+.efficiency-dashboards {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+.dashboard-container {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.dashboard-card {
+  background: #f7faff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(102,126,234,0.10);
+  padding: 2rem 1.5rem;
+  min-width: 320px;
+  max-width: 400px;
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.chart-container {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  margin-bottom: 1rem;
+}
+.chart {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(180deg, #e8f0ff 0%, #f7faff 100%);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.data-point {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #667eea;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 2;
+  transition: background 0.2s;
+}
+.data-point.productivity {
+  background: #38a169;
+}
+.chart-line, .chart-line.productivity-line {
+  position: absolute;
+  left: 0; top: 0; width: 100%; height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+.line-segment {
+  position: absolute;
+  width: 2px;
+  background: #667eea;
+  bottom: 0;
+  border-radius: 2px;
+}
+.line-segment.productivity {
+  background: #38a169;
+}
+.chart-labels {
+  position: absolute;
+  width: 100%;
+  left: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.8rem;
+  color: #4a5568;
+  pointer-events: none;
+}
+.y-label {
+  position: absolute;
+  left: 0; top: 0;
+  font-weight: 600;
+}
+.x-label {
+  position: absolute;
+  right: 0; bottom: 0;
+  font-weight: 600;
+}
+.chart-stats {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+.stat-label {
+  color: #4a5568;
+  font-weight: 600;
+}
+.stat-value {
+  color: #2d3748;
+  font-weight: 700;
+  margin-left: 0.5rem;
+} 

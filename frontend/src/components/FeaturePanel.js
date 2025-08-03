@@ -1,114 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import './FeaturePanel.css';
 
-const FeaturePanel = ({ goals, currentGoalIndex, transcript }) => {
-  const [decisions, setDecisions] = useState({});
+const FeaturePanel = ({ goals, currentGoalIndex, transcript, decisions, setDecisions }) => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  // OpenAI API key from environment
-  const openaiApiKey = process.env.REACT_APP_OPENAI_API_KEY;
-
-  // Function to analyze transcript with OpenAI
   const analyzeTranscriptWithOpenAI = async (transcript, goalTitle) => {
     if (!transcript || !transcript.trim()) {
-      return "No transcript available for analysis.";
+      return 'No transcript available for analysis.';
     }
 
+    setIsAnalyzing(true);
+    
     try {
-      setIsAnalyzing(true);
-      
-      const prompt = `Analyze this meeting transcript and provide a concise decision or key takeaway for the agenda item "${goalTitle}". 
-      
-      Transcript: "${transcript}"
-      
-      Please provide a clear, actionable decision or conclusion that was reached during this agenda item. If no clear decision was made, summarize the main points discussed.
-      
-      Format your response as a brief, professional decision statement.`;
-
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${openaiApiKey}`
+          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`
         },
         body: JSON.stringify({
           model: 'gpt-3.5-turbo',
           messages: [
             {
               role: 'system',
-              content: 'You are a meeting assistant that extracts clear decisions and key takeaways from meeting transcripts.'
+              content: 'You are an AI assistant that analyzes meeting transcripts and extracts key decisions and takeaways. Provide concise, actionable insights.'
             },
             {
               role: 'user',
-              content: prompt
+              content: `Analyze this meeting transcript for the agenda item "${goalTitle}". Extract the key decisions made, important takeaways, and any action items. Be concise and specific.\n\nTranscript:\n${transcript}`
             }
           ],
-          max_tokens: 150,
-          temperature: 0.3
+          max_tokens: 300,
+          temperature: 0.7
         })
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('OpenAI API error:', errorText);
-        return "Unable to analyze transcript at this time.";
+      if (response.ok) {
+        const data = await response.json();
+        return data.choices[0].message.content;
+      } else {
+        console.error('OpenAI API error:', response.status, response.statusText);
+        return 'Error analyzing transcript. Please try again.';
       }
-
-      const data = await response.json();
-      const analysis = data.choices[0]?.message?.content?.trim();
-      
-      return analysis || "No clear decision identified.";
-      
     } catch (error) {
-      console.error('Error analyzing transcript:', error);
-      return "Error analyzing transcript.";
+      console.error('Error calling OpenAI:', error);
+      return 'Error analyzing transcript. Please try again.';
     } finally {
       setIsAnalyzing(false);
     }
   };
 
-  // Auto-analyze when agenda item changes and we have transcript
-  useEffect(() => {
-    if (currentGoalIndex >= 0 && currentGoalIndex < goals.length && transcript && transcript.trim()) {
-      const currentGoal = goals[currentGoalIndex];
-      const goalKey = `goal_${currentGoalIndex}`;
-      
-      // Only analyze if we don't already have a decision for this goal
-      if (!decisions[goalKey]) {
-        console.log(`Auto-analyzing transcript for agenda item: ${currentGoal.title}`);
-        console.log('Transcript to analyze:', transcript);
-        analyzeTranscriptWithOpenAI(transcript, currentGoal.title).then(analysis => {
-          console.log('Analysis result:', analysis);
-          setDecisions(prev => ({
-            ...prev,
-            [goalKey]: analysis
-          }));
-        });
-      }
-    }
-  }, [currentGoalIndex, transcript, goals, decisions]);
-
-  // New effect to handle agenda item completion
-  useEffect(() => {
-    // Check if any goals were just completed
-    goals.forEach((goal, index) => {
-      const goalKey = `goal_${index}`;
-      
-      // If goal is completed and we don't have a decision yet, analyze
-      if (goal.completed && !decisions[goalKey] && transcript && transcript.trim()) {
-        console.log(`Agenda item ${index} (${goal.title}) completed, analyzing transcript`);
-        console.log('Transcript to analyze:', transcript);
-        
-        analyzeTranscriptWithOpenAI(transcript, goal.title).then(analysis => {
-          console.log('Analysis result for completed item:', analysis);
-          setDecisions(prev => ({
-            ...prev,
-            [goalKey]: analysis
-          }));
-        });
-      }
-    });
-  }, [goals, transcript, decisions]);
+  // Remove automatic analysis effects - we only analyze when agenda items are complete
+  // which is handled in App.js handleAgendaItemComplete
 
   const handleDecisionChange = (goalIndex, value) => {
     const goalKey = `goal_${goalIndex}`;

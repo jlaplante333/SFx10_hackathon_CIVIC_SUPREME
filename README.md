@@ -1,5 +1,7 @@
 # SFx10 - Civic Meetings Supreme
 
+**🌐 [Live App Demo](https://github.com/jlaplante333/SFx10_hackathon_CIVIC_SUPREME)** - This is the link to our lovable app for the maps with orchestra data and all data we could find integration.
+
 A fullstack web application that enables voice-based civic meetings to be transcribed, analyzed, and turned into structured meeting output.
 
 ## Features

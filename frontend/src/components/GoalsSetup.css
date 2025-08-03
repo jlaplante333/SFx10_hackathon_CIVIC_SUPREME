@@ -27,7 +27,7 @@
   font-size: 2.8rem;
   font-weight: 800;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1e3c72 0%, #ff6b35 50%, #2d5016 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -50,12 +50,12 @@
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1e3c72 0%, #ff6b35 50%, #2d5016 100%);
   color: white;
   padding: 2rem;
   border-radius: 16px;
   text-align: center;
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -79,7 +79,7 @@
 
 .stat-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 12px 35px rgba(30, 60, 114, 0.4);
 }
 
 .stat-icon {
@@ -177,39 +177,43 @@
 }
 
 .apply-buffer-btn {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  background: linear-gradient(135deg, #1e3c72 0%, #ff6b35 100%);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+  box-shadow: 0 4px 15px rgba(30, 60, 114, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .apply-buffer-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(30, 60, 114, 0.4);
 }
 
 .test-btn {
-  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #2d5016 100%);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .test-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
 }
 
 /* Add Goal Section */
@@ -291,23 +295,23 @@
 }
 
 .add-goal-btn {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+  box-shadow: 0 4px 15px rgba(45, 80, 22, 0.3);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .add-goal-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(45, 80, 22, 0.4);
 }
 
 /* Goals List */
@@ -335,7 +339,7 @@
 }
 
 .goal-item.completed {
-  border-color: #28a745;
+  border-color: #2d5016;
   background: linear-gradient(135deg, #f8fff9 0%, #e8f5e8 100%);
 }
 
@@ -347,7 +351,7 @@
 }
 
 .goal-number {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1e3c72 0%, #ff6b35 100%);
   color: white;
   width: 48px;
   height: 48px;
@@ -357,7 +361,7 @@
   justify-content: center;
   font-weight: bold;
   font-size: 1.2rem;
-  box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 6px 15px rgba(30, 60, 114, 0.3);
   flex-shrink: 0;
 }
 
@@ -406,6 +410,7 @@
   font-size: 0.9rem;
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #1e3c72 0%, #ff6b35 100%);
 }
 
 .time-badge {
@@ -486,7 +491,7 @@
 }
 
 .toggle-btn.completed {
-  background: #28a745;
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
   color: white;
 }
 
@@ -554,23 +559,23 @@
 }
 
 .submit-goals-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1e3c72 0%, #ff6b35 50%, #2d5016 100%);
   color: white;
   border: none;
   padding: 1.5rem 3rem;
-  border-radius: 16px;
+  border-radius: 20px;
   font-size: 1.4rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 10px 30px rgba(30, 60, 114, 0.4);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .submit-goals-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(30, 60, 114, 0.5);
 }
 
 .submit-goals-btn:active {

@@ -266,8 +266,8 @@ function App() {
         // Meeting Page
         <>
           <header className="App-header">
-            <h1>Huddle</h1>
-            <p>Record, transcribe, and analyze engineering discussions</p>
+            <h1>Civic Supreme</h1>
+            <p>Your visionary companion for understanding and reimagining neighborhoods. Turn complex civic planning into beautiful, actionable knowledge.</p>
           </header>
 
           <main className="App-main">
@@ -332,6 +332,38 @@ function App() {
               </div>
             </div>
           </main>
+
+          {/* Feature Cards Section */}
+          <div className="feature-cards-section">
+            <div className="feature-card">
+              <div className="feature-icon">📍</div>
+              <div className="feature-text">
+                <h3>Interactive Maps</h3>
+                <p>Visualize civic data</p>
+              </div>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🗣️</div>
+              <div className="feature-text">
+                <h3>Community Voice</h3>
+                <p>Amplify local voices</p>
+              </div>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">📊</div>
+              <div className="feature-text">
+                <h3>Meeting Insights</h3>
+                <p>AI-powered analysis</p>
+              </div>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🌱</div>
+              <div className="feature-text">
+                <h3>Green Future</h3>
+                <p>Sustainable planning</p>
+              </div>
+            </div>
+          </div>
 
           {/* Beautiful FAQ Section */}
           <FAQ />

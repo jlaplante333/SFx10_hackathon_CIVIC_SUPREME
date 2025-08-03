@@ -13,7 +13,7 @@ const CompletionPage = ({ goals, decisions, totalTime }) => {
       <div className="completion-container">
         <div className="completion-header">
           <div className="celebration-icon">🎉</div>
-          <h1>Congratulations on your meeting!</h1>
+          <h1>SFx10 - Civic Supreme - City Council Team Meeting Supreme</h1>
           <div className="efficiency-score">
             <span className="score-label">Efficiency Score:</span>
             <span className="score-value">{efficiencyScore}!!!</span>

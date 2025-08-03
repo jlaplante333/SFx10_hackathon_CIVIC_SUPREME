@@ -126,7 +126,7 @@ const GoalsSetup = ({ onGoalsSubmit }) => {
   return (
     <div className="goals-setup-container">
       <div className="goals-setup-header">
-        <h1>Huddle</h1>
+        <h1>SFx10 - Civic Supreme - City Council Team Meeting Supreme</h1>
         <p>Define your meeting agenda with goals, complexity, and time estimates</p>
       </div>
       

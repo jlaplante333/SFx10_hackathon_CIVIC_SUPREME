@@ -1,6 +1,6 @@
-# Voice Engineering Discussions
+# SFx10 - Civic Meetings Supreme
 
-A fullstack web application that enables voice-based engineering discussions to be transcribed, analyzed, and turned into structured design output.
+A fullstack web application that enables voice-based civic meetings to be transcribed, analyzed, and turned into structured meeting output.
 
 ## Features
 

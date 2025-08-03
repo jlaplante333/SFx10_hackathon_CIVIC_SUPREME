@@ -6,47 +6,53 @@ const FAQ = () => {
 
   const faqData = [
     {
-      question: "What is Huddle?",
-      answer: "Huddle is an AI-powered meeting efficiency tool that helps teams conduct more productive meetings. It uses real-time transcription, smart agenda management, and AI insights to maximize meeting effectiveness and build consensus in real time.",
-      icon: "🎯"
+      question: "What is Civic Supreme?",
+      answer: "Civic Supreme is an AI-powered civic intelligence platform designed to help San Francisco and other cities conduct more efficient meetings and make data-driven decisions. It combines real-time transcription, interactive maps with orchestra data, and instant intelligence to transform how cities plan and execute civic initiatives.",
+      icon: "🏛️"
     },
     {
-      question: "How does the Smart Assistant work?",
-      answer: "The Smart Assistant uses Mastra AI to analyze your meeting transcript in real-time and provides intelligent suggestions, insights, and recommendations to keep your meeting focused and productive.",
+      question: "How does the Interactive Map feature work?",
+      answer: "Our interactive maps integrate with orchestra data and other civic datasets to provide instant intelligence on city infrastructure, demographics, and community needs. City officials can visualize data in real-time during meetings, making informed decisions based on comprehensive civic intelligence.",
+      icon: "🗺️"
+    },
+    {
+      question: "How does the Smart Assistant help with civic meetings?",
+      answer: "The Smart Assistant uses AI to analyze meeting transcripts in real-time and provides intelligent suggestions, insights, and recommendations specifically tailored for civic planning. It helps city officials stay focused on community priorities and make data-driven decisions.",
       icon: "🤖"
     },
     {
-      question: "Can I customize meeting goals and times?",
-      answer: "Yes! You can set custom meeting goals, estimated times (including decimal values like 0.75 minutes), and complexity levels. The system will automatically track progress and provide time management suggestions.",
+      question: "Can I customize meeting goals for different city departments?",
+      answer: "Yes! You can set custom meeting goals for various city departments like transportation, housing, public safety, and environmental services. The system tracks progress and provides time management suggestions optimized for civic workflows.",
       icon: "⚙️"
     },
     {
-      question: "What happens when an agenda item is completed?",
-      answer: "When an agenda item is completed, the system automatically analyzes the transcript for that segment using AI to extract key decisions, takeaways, and action items. This information is saved and displayed in the Decisions panel."
+      question: "What happens when a civic agenda item is completed?",
+      answer: "When a civic agenda item is completed, the system automatically analyzes the transcript using AI to extract key decisions, community impact assessments, and action items. This information is saved and displayed in the Decisions panel for follow-up.",
+      icon: "📋"
     },
     {
-      question: "How does the time extension feature work?",
-      answer: "When you're running out of time for an agenda item, a popup appears asking if you want more time. You can choose 'Decide' to move on or 'More Time' to add 1 minute, which automatically adjusts all future agenda items."
+      question: "How does the time extension feature work for city meetings?",
+      answer: "When city officials are running out of time for an agenda item, a popup appears asking if they want more time. They can choose 'Decide' to move on or 'More Time' to add time, which automatically adjusts all future agenda items to maintain meeting efficiency.",
+      icon: "⏰"
     },
     {
-      question: "What is the Efficiency Score?",
-      answer: "The Efficiency Score is calculated based on completed goals, decisions made, and meeting outcomes. It provides a quantitative measure of your meeting's effectiveness, with a maximum score of 1000."
+      question: "What is the Civic Efficiency Score?",
+      answer: "The Civic Efficiency Score is calculated based on completed goals, decisions made, and community outcomes. It provides a quantitative measure of your civic meeting's effectiveness, with a maximum score of 1000, helping cities track their governance performance.",
+      icon: "📊"
     },
     {
-      question: "How does real-time transcription work?",
-      answer: "Huddle uses Web Speech API for real-time transcription. As you speak during the meeting, your words are converted to text and displayed live, enabling the Smart Assistant to provide contextual insights."
+      question: "How does real-time transcription work for city meetings?",
+      answer: "Civic Supreme uses Web Speech API for real-time transcription. As city officials speak during meetings, their words are converted to text and displayed live, enabling the Smart Assistant to provide contextual insights and data-driven recommendations.",
+      icon: "🎤"
     },
     {
-      question: "Can I export meeting summaries?",
-      answer: "Currently, meeting summaries and decisions are displayed in the completion page. Future versions will include export functionality for meeting reports and action items."
+      question: "What data sources does Civic Supreme integrate with?",
+      answer: "Civic Supreme integrates with orchestra data, city databases, demographic information, infrastructure maps, and other civic datasets. This provides comprehensive intelligence for informed decision-making during city meetings.",
+      icon: "🔗"
     },
     {
-      question: "What AI technologies does Huddle use?",
-      answer: "Huddle integrates with Mastra AI for intelligent meeting analysis, OpenAI for decision extraction, and Web Speech API for real-time transcription. This combination provides comprehensive meeting intelligence."
-    },
-    {
-      question: "How do I get the best results from Huddle?",
-      answer: "For optimal results: 1) Set clear, specific meeting goals, 2) Use realistic time estimates, 3) Speak clearly for better transcription, 4) Review and act on Smart Assistant suggestions, 5) Complete all agenda items to maximize your efficiency score."
+      question: "How do I get the best results from Civic Supreme?",
+      answer: "For optimal civic results: 1) Set clear, community-focused meeting goals, 2) Use realistic time estimates for complex civic issues, 3) Speak clearly for better transcription, 4) Review and act on Smart Assistant suggestions, 5) Complete all agenda items to maximize your civic efficiency score and community impact."
     }
   ];
 
